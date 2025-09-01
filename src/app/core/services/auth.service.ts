@@ -9,7 +9,7 @@ export class AuthService {
     {
       id: 1,
       email: 'admin@example.com',
-      password: 'admin123', // En production, ce serait hashé
+      password: 'admin123',
       role: 'admin',
       createdAt: new Date('2024-01-01'),
     },

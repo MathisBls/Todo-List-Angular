@@ -1,18 +1,21 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './shared/components/header/header.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [CommonModule, RouterOutlet, HeaderComponent],
   template: `
-    <app-header></app-header>
-    <main class="container mx-auto p-4">
-      <router-outlet></router-outlet>
-    </main>
+    <div class="app-container">
+      <app-header></app-header>
+      <main>
+        <router-outlet></router-outlet>
+      </main>
+    </div>
   `,
-  styles: [],
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'todo-list-app';

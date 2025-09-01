@@ -5,7 +5,7 @@ export interface Todo {
   status: 'todo' | 'in-progress' | 'done';
   priority: 'low' | 'medium' | 'high';
   assignedTo?: number; // ID de l'utilisateur assigné
-  createdBy: number; // ID de l'utilisateur créateur
+  createdBy: number;   // ID de l'utilisateur créateur
   createdAt: Date;
   updatedAt: Date;
 }
