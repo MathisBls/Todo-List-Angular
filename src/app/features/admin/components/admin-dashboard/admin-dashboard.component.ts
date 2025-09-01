@@ -9,27 +9,25 @@ import { User } from '../../../../features/auth/models/user.model';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './admin-dashboard.component.html',
-  styles: [],
+  styleUrls: ['./admin-dashboard.component.scss'],
 })
 export class AdminDashboardComponent implements OnInit {
-  private authService = inject(AuthService);
-  private router = inject(Router);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
-  users = signal<User[]>([]);
+  protected users = signal<User[]>([]);
 
-  async ngOnInit() {
-    // Vérifier que l'utilisateur est admin
+  async ngOnInit(): Promise<void> {
     const currentUser = this.authService.getCurrentUser();
     if (!currentUser || currentUser.role !== 'admin') {
       this.router.navigate(['/todos']);
       return;
     }
 
-    // Charger les utilisateurs
     await this.loadUsers();
   }
 
-  async loadUsers() {
+  private async loadUsers(): Promise<void> {
     try {
       const users = await this.authService.getAllUsers();
       this.users.set(users);
@@ -38,7 +36,7 @@ export class AdminDashboardComponent implements OnInit {
     }
   }
 
-  goBack() {
+  protected goBack(): void {
     this.router.navigate(['/todos']);
   }
 }

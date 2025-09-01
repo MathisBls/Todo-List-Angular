@@ -12,16 +12,16 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
-  private authService = inject(AuthService);
-  private router = inject(Router);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
-  email = signal('');
-  password = signal('');
-  confirmPassword = signal('');
-  loading = signal(false);
-  error = signal<string | null>(null);
+  protected email = signal('');
+  protected password = signal('');
+  protected confirmPassword = signal('');
+  protected loading = signal(false);
+  protected error = signal<string | null>(null);
 
-  onSubmit() {
+  protected onSubmit(): void {
     if (this.password() !== this.confirmPassword()) {
       this.error.set('Les mots de passe ne correspondent pas');
       return;

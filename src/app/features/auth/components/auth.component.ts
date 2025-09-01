@@ -20,7 +20,7 @@ export class AuthComponent {
   protected error = signal<string | null>(null);
   protected loading = signal(false);
 
-  public onLogin(): void {
+  protected onLogin(): void {
     this.loading.set(true);
     this.error.set(null);
 

@@ -11,12 +11,12 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  private authService = inject(AuthService);
-  private router = inject(Router);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
-  currentUser = this.authService.getCurrentUserSignal();
+  protected currentUser = this.authService.getCurrentUserSignal();
 
-  logout() {
+  protected logout(): void {
     this.authService.logout();
     this.router.navigate(['/auth']);
   }

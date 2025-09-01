@@ -12,23 +12,23 @@ import { TodoService } from '../services/todo.service';
   styleUrls: ['./todos.component.scss'],
 })
 export class TodosComponent implements OnInit {
-  private todoService = inject(TodoService);
+  private readonly todoService = inject(TodoService);
 
-  todos = signal<Todo[]>([]);
-  loading = signal(true);
-  addingTodo = signal(false);
+  protected todos = signal<Todo[]>([]);
+  protected loading = signal(true);
+  protected addingTodo = signal(false);
 
-  newTodo = {
+  protected newTodo = {
     title: '',
     description: '',
     priority: 'medium' as const,
   };
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     await this.loadTodos();
   }
 
-  async loadTodos() {
+  protected async loadTodos(): Promise<void> {
     try {
       this.loading.set(true);
       const todos = await this.todoService.getAllTodos();
@@ -40,7 +40,7 @@ export class TodosComponent implements OnInit {
     }
   }
 
-  async addTodo() {
+  protected async addTodo(): Promise<void> {
     if (this.newTodo.title.trim()) {
       try {
         this.addingTodo.set(true);
@@ -62,7 +62,7 @@ export class TodosComponent implements OnInit {
     }
   }
 
-  async updateStatus(id: number, status: Todo['status']) {
+  protected async updateStatus(id: number, status: Todo['status']): Promise<void> {
     try {
       await this.todoService.updateTodo(id, { status });
       await this.loadTodos();
@@ -71,7 +71,7 @@ export class TodosComponent implements OnInit {
     }
   }
 
-  async deleteTodo(id: number) {
+  protected async deleteTodo(id: number): Promise<void> {
     try {
       await this.todoService.deleteTodo(id);
       await this.loadTodos();
@@ -80,7 +80,7 @@ export class TodosComponent implements OnInit {
     }
   }
 
-  getTodosByStatus(status: Todo['status']): Todo[] {
+  protected getTodosByStatus(status: Todo['status']): Todo[] {
     return this.todos().filter(todo => todo.status === status);
   }
 }

@@ -1,4 +1,3 @@
-// src/app/features/admin/admin.routes.ts
 import { Routes } from '@angular/router';
 
 export const ADMIN_ROUTES: Routes = [
