@@ -1,0 +1,120 @@
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafb;
+  padding: 3rem 1rem;
+
+  .register-card {
+    max-width: 28rem;
+    width: 100%;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-radius: 0.5rem;
+    text-align: center;
+
+    h2 {
+      margin-top: 1.5rem;
+      font-size: 1.875rem;
+      font-weight: 800;
+      color: #1a202c;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      text-align: left;
+
+      label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #4a5568;
+        margin-bottom: 0.25rem;
+      }
+
+      input {
+        display: block;
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        margin-top: 0.25rem;
+        border: 1px solid #e2e8f0;
+        border-radius: 0.375rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+        &:focus {
+          outline: none;
+          box-shadow: 0 0 0 2px #3b82f6;
+          border-color: #3b82f6;
+        }
+      }
+    }
+
+    .error-message {
+      color: #dc2626;
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      text-align: left;
+    }
+
+    .submit-button {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      color: #ffffff;
+      background-color: #2563eb;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #1d4ed8;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px #3b82f6;
+        box-shadow-offset: 2px;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+
+    .login-link {
+      display: block;
+      margin-top: 1.5rem;
+      font-size: 0.875rem;
+      color: #2563eb;
+      text-decoration: none;
+
+      &:hover {
+        color: #1d4ed8;
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .register-container {
+    padding: 1rem 0.5rem;
+
+    .register-card {
+      margin: 1rem 0;
+      padding: 1rem;
+
+      h2 {
+        font-size: 1.5rem;
+      }
+    }
+  }
+}
