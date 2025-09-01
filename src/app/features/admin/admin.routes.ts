@@ -9,11 +9,4 @@ export const ADMIN_ROUTES: Routes = [
         m => m.AdminDashboardComponent
       ),
   },
-  {
-    path: 'users',
-    loadComponent: () =>
-      import('./components/user-management/user-management.component').then(
-        m => m.UserManagementComponent
-      ),
-  },
 ];
