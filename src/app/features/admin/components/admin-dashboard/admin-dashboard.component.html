@@ -1,0 +1,54 @@
+<div class="admin-dashboard">
+  <div class="dashboard-header">
+    <h1>Interface d'Administration</h1>
+    <p>Gérez les utilisateurs et les tickets de votre application</p>
+  </div>
+
+  <div class="dashboard-content">
+    <div class="content-header">
+      <h2>Bienvenue dans l'interface Admin</h2>
+      <p>Cette interface vous permet de gérer tous les aspects de votre application</p>
+    </div>
+
+    <div class="content-body">
+      <div class="welcome-message">
+        <h3>Tableau de bord</h3>
+        <p>
+          Vous avez accès à toutes les fonctionnalités d'administration pour gérer votre application
+          TodoList.
+        </p>
+      </div>
+
+      <div class="action-buttons">
+        <button (click)="goBack()" class="btn btn-primary">Retour aux Todos</button>
+        <button class="btn btn-secondary">Voir les statistiques</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">{{ users().length }}</div>
+          <div class="stat-label">Utilisateurs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">3</div>
+          <div class="stat-label">Tickets actifs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">2</div>
+          <div class="stat-label">Admins</div>
+        </div>
+      </div>
+
+      <div class="feature-list">
+        <h4>Fonctionnalités disponibles :</h4>
+        <ul>
+          <li>Gestion des utilisateurs (création, modification, suppression)</li>
+          <li>Gestion des tickets et tâches</li>
+          <li>Attribution des rôles et permissions</li>
+          <li>Statistiques et rapports</li>
+          <li>Modération du contenu</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
