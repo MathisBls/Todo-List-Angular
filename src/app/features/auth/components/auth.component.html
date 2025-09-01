@@ -1,0 +1,29 @@
+<div class="auth-form">
+  <h2>Connexion</h2>
+
+  <form (submit)="onLogin(); $event.preventDefault()">
+    <label>Email :</label>
+    <input
+      type="email"
+      [value]="email()"
+      (input)="onEmailChange($any($event.target).value)"
+      required
+    />
+
+    <label>Mot de passe :</label>
+    <input
+      type="password"
+      [value]="password()"
+      (input)="onPasswordChange($any($event.target).value)"
+      required
+    />
+
+    <button type="submit" [disabled]="loading()">Se connecter</button>
+  </form>
+
+  @if (error()) {
+    <div class="error">
+      {{ error() }}
+    </div>
+  }
+</div>

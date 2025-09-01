@@ -1,9 +1,10 @@
 {
   "name": "angular-todo",
   "version": "0.0.0",
- "scripts": {
+  "scripts": {
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
+    "test": "echo \"No tests yet\" && exit 0",
     "format": "prettier --write \"src/**/*.{ts,html,scss,css,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,html,scss,css,json}\"",
     "prepare": "husky"
@@ -17,6 +18,7 @@
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
+    "prettier": "^3.6.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
