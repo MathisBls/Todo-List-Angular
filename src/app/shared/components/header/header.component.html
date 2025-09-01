@@ -1,0 +1,36 @@
+<header class="header-container">
+  <div class="header-content">
+    <a routerLink="/todos" class="logo">TodoList App</a>
+
+    <nav class="navigation">
+      <ul>
+        @if (currentUser()) {
+          <li>
+            <a routerLink="/todos" routerLinkActive="active">Todos</a>
+          </li>
+          @if (currentUser()?.role === 'admin') {
+            <li>
+              <a routerLink="/admin" routerLinkActive="active">Admin</a>
+            </li>
+          }
+          <li>
+            <button (click)="logout()" class="logout-btn">Déconnexion</button>
+          </li>
+        } @else {
+          <li>
+            <a routerLink="/auth" routerLinkActive="active">Connexion</a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    @if (currentUser()) {
+      <div class="user-info">
+        <div class="user-avatar">
+          {{ (currentUser()?.email || 'U').charAt(0).toUpperCase() }}
+        </div>
+        <span class="user-role">{{ currentUser()?.role }}</span>
+      </div>
+    }
+  </div>
+</header>

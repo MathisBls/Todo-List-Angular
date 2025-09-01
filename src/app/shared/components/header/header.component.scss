@@ -1,0 +1,125 @@
+.header-container {
+  background-color: #2563eb;
+  color: #ffffff;
+  padding: 1rem;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #dbeafe;
+      }
+    }
+
+    .navigation {
+      ul {
+        display: flex;
+        gap: 1rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+          a,
+          button {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.375rem;
+            transition: all 0.2s ease;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 500;
+
+            &:hover {
+              background-color: rgba(255, 255, 255, 0.1);
+              color: #dbeafe;
+            }
+
+            &.active {
+              background-color: rgba(255, 255, 255, 0.2);
+              color: #ffffff;
+            }
+          }
+
+          button.logout-btn {
+            &:hover {
+              background-color: rgba(239, 68, 68, 0.2);
+              color: #fecaca;
+            }
+          }
+        }
+      }
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .user-avatar {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.875rem;
+      }
+
+      .user-role {
+        font-size: 0.75rem;
+        opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    padding: 0.75rem;
+
+    .header-content {
+      flex-direction: column;
+      gap: 1rem;
+
+      .navigation ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+
+        li a,
+        li button {
+          padding: 0.375rem 0.5rem;
+          font-size: 0.75rem;
+        }
+      }
+
+      .user-info {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+    }
+  }
+}
