@@ -24,16 +24,44 @@ export class AuthService {
 
   private currentUser = signal<User | null>(null);
 
+  constructor() {
+    this.restoreSession();
+  }
+
   getCurrentUserSignal() {
     return this.currentUser.asReadonly();
   }
 
-  // Simuler un délai réseau
   private delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  // POST - Connexion
+  private saveToLocalStorage(user: User): void {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    localStorage.setItem('isAuthenticated', 'true');
+  }
+
+  private removeFromLocalStorage(): void {
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('isAuthenticated');
+  }
+
+  private restoreSession(): void {
+    const savedUser = localStorage.getItem('currentUser');
+    const isAuthenticated = localStorage.getItem('isAuthenticated');
+
+    if (savedUser && isAuthenticated === 'true') {
+      try {
+        const user = JSON.parse(savedUser);
+        this.currentUser.set(user);
+        console.log('✅ Session restaurée pour:', user.email);
+      } catch (error) {
+        console.error('❌ Erreur lors de la restauration de session:', error);
+        this.removeFromLocalStorage();
+      }
+    }
+  }
+
   async login(
     credentials: LoginRequest
   ): Promise<{ success: boolean; user?: User; error?: string }> {
@@ -46,6 +74,7 @@ export class AuthService {
 
     if (user) {
       this.currentUser.set(user);
+      this.saveToLocalStorage(user);
       console.log('✅ Service: Connexion réussie pour:', user.email);
       return { success: true, user };
     } else {
@@ -54,20 +83,17 @@ export class AuthService {
     }
   }
 
-  // POST - Inscription
   async register(
     userData: RegisterRequest
   ): Promise<{ success: boolean; user?: User; error?: string }> {
     console.log("🔄 Service: Tentative d'inscription...", userData.email);
     await this.delay(600);
 
-    // Vérifier si l'email existe déjà
     if (this.users().some(u => u.email === userData.email)) {
       console.log('❌ Service: Email déjà utilisé:', userData.email);
       return { success: false, error: 'Cet email est déjà utilisé' };
     }
 
-    // Vérifier que les mots de passe correspondent
     if (userData.password !== userData.confirmPassword) {
       console.log('❌ Service: Mots de passe différents');
       return { success: false, error: 'Les mots de passe ne correspondent pas' };
@@ -83,35 +109,32 @@ export class AuthService {
 
     this.users.update(users => [...users, newUser]);
     this.currentUser.set(newUser);
+    this.saveToLocalStorage(newUser);
 
     console.log('✅ Service: Inscription réussie pour:', newUser.email);
     return { success: true, user: newUser };
   }
 
-  // POST - Déconnexion
   async logout(): Promise<void> {
     console.log('🔄 Service: Déconnexion...');
     await this.delay(200);
     this.currentUser.set(null);
+    this.removeFromLocalStorage();
     console.log('✅ Service: Déconnexion réussie');
   }
 
-  // GET - Vérifier si l'utilisateur est connecté
   isAuthenticated(): boolean {
     return this.currentUser() !== null;
   }
 
-  // GET - Récupérer l'utilisateur actuel
   getCurrentUser(): User | null {
     return this.currentUser();
   }
 
-  // GET - Vérifier si l'utilisateur est admin
   isAdmin(): boolean {
     return this.currentUser()?.role === 'admin';
   }
 
-  // GET - Récupérer tous les utilisateurs (admin seulement)
   async getAllUsers(): Promise<User[]> {
     console.log('🔄 Service: Récupération de tous les utilisateurs...');
     await this.delay(400);
@@ -123,7 +146,7 @@ export class AuthService {
     console.log('✅ Service: Utilisateurs récupérés');
     return this.users().map(user => ({
       ...user,
-      password: '***', // Masquer les mots de passe
+      password: '***',
     }));
   }
 }
