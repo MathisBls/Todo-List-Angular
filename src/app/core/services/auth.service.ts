@@ -24,6 +24,10 @@ export class AuthService {
 
   private currentUser = signal<User | null>(null);
 
+  getCurrentUserSignal() {
+    return this.currentUser.asReadonly();
+  }
+
   // Simuler un délai réseau
   private delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
