@@ -1,0 +1,122 @@
+<div class="todos-container">
+  <div class="todos-header">
+    <h2>Mes Todos</h2>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+      <p>Chargement des todos...</p>
+    </div>
+  } @else {
+    <div class="add-todo-form">
+      <h3>Ajouter une tâche</h3>
+      <form (ngSubmit)="addTodo()" #todoForm="ngForm">
+        <div class="form-grid">
+          <input
+            type="text"
+            [(ngModel)]="newTodo.title"
+            name="title"
+            placeholder="Titre de la tâche"
+            required
+          />
+
+          <input
+            type="text"
+            [(ngModel)]="newTodo.description"
+            name="description"
+            placeholder="Description (optionnel)"
+          />
+        </div>
+
+        <div class="form-row">
+          <select [(ngModel)]="newTodo.priority" name="priority">
+            <option value="low">Basse priorité</option>
+            <option value="medium">Priorité moyenne</option>
+            <option value="high">Haute priorité</option>
+          </select>
+
+          <button
+            type="submit"
+            class="add-button"
+            [disabled]="!todoForm.form.valid || addingTodo()"
+          >
+            @if (addingTodo()) {
+              <span class="spinner"></span>
+            }
+            Ajouter
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="kanban-board">
+      <div class="kanban-column todo-column">
+        <h3>
+          À faire
+          <span class="count">({{ getTodosByStatus('todo').length }})</span>
+        </h3>
+        @for (todo of getTodosByStatus('todo'); track todo.id) {
+          <div class="todo-item">
+            <h4>{{ todo.title }}</h4>
+            @if (todo.description) {
+              <p>{{ todo.description }}</p>
+            }
+            <div class="todo-footer">
+              <span class="priority-badge" [class]="todo.priority">
+                {{ todo.priority | titlecase }}
+              </span>
+              <button (click)="updateStatus(todo.id, 'in-progress')" class="action-button">
+                Commencer
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="kanban-column in-progress-column">
+        <h3>
+          En cours
+          <span class="count">({{ getTodosByStatus('in-progress').length }})</span>
+        </h3>
+        @for (todo of getTodosByStatus('in-progress'); track todo.id) {
+          <div class="todo-item">
+            <h4>{{ todo.title }}</h4>
+            @if (todo.description) {
+              <p>{{ todo.description }}</p>
+            }
+            <div class="todo-footer">
+              <span class="priority-badge" [class]="todo.priority">
+                {{ todo.priority | titlecase }}
+              </span>
+              <button (click)="updateStatus(todo.id, 'done')" class="action-button">
+                Terminer
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="kanban-column done-column">
+        <h3>
+          Terminé
+          <span class="count">({{ getTodosByStatus('done').length }})</span>
+        </h3>
+        @for (todo of getTodosByStatus('done'); track todo.id) {
+          <div class="todo-item">
+            <h4>{{ todo.title }}</h4>
+            @if (todo.description) {
+              <p>{{ todo.description }}</p>
+            }
+            <div class="todo-footer">
+              <span class="priority-badge" [class]="todo.priority">
+                {{ todo.priority | titlecase }}
+              </span>
+              <button (click)="deleteTodo(todo.id)" class="action-button delete">Supprimer</button>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>
