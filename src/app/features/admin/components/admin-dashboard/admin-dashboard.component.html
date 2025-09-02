@@ -11,43 +11,147 @@
     </div>
 
     <div class="content-body">
-      <div class="welcome-message">
-        <h3>Tableau de bord</h3>
-        <p>
-          Vous avez accès à toutes les fonctionnalités d'administration pour gérer votre application
-          TodoList.
-        </p>
+      <div class="tab-navigation">
+        <button
+          (click)="activeTab.set('users')"
+          [class.active]="activeTab() === 'users'"
+          class="tab-button"
+        >
+          Utilisateurs
+        </button>
+        <button
+          (click)="activeTab.set('tickets')"
+          [class.active]="activeTab() === 'tickets'"
+          class="tab-button"
+        >
+          Tickets
+        </button>
       </div>
 
+      <!-- Contenu des onglets -->
+      @if (activeTab() === 'users') {
+        <div class="data-section">
+          <h3>Gestion des Utilisateurs</h3>
+          @if (users().length > 0) {
+            <div class="data-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Utilisateur</th>
+                    <th>Rôle</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (user of users(); track user.id) {
+                    <tr>
+                      <td class="user-info">
+                        <div class="user-avatar">
+                          {{ user.name.charAt(0).toUpperCase() }}
+                        </div>
+                        <div class="user-details">
+                          <div class="user-name">{{ user.name }}</div>
+                          <div class="user-email">{{ user.email }}</div>
+                        </div>
+                      </td>
+                      <td>
+                        <span
+                          class="role-badge"
+                          [class.admin]="user.role === 'admin'"
+                          [class.user]="user.role === 'user'"
+                        >
+                          {{ user.role | titlecase }}
+                        </span>
+                      </td>
+                      <td class="actions">
+                        @if (user.role !== 'admin') {
+                          <button (click)="deleteUser(user.id)" class="btn-delete">
+                            Supprimer
+                          </button>
+                        } @else {
+                          <span class="protected">Admin protégé</span>
+                        }
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          } @else {
+            <div class="empty-state">
+              <p>Aucun utilisateur trouvé</p>
+            </div>
+          }
+        </div>
+      }
+
+      @if (activeTab() === 'tickets') {
+        <div class="data-section">
+          <h3>Gestion des Tickets</h3>
+          @if (todos().length > 0) {
+            <div class="data-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Ticket</th>
+                    <th>Statut</th>
+                    <th>Priorité</th>
+                    <th>Assigné à</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (todo of todos(); track todo.id) {
+                    <tr>
+                      <td class="ticket-info">
+                        <div class="ticket-title">{{ todo.title }}</div>
+                        @if (todo.description) {
+                          <div class="ticket-description">{{ todo.description }}</div>
+                        }
+                      </td>
+                      <td>
+                        <span
+                          class="status-badge"
+                          [class.todo]="todo.status === 'todo'"
+                          [class.in-progress]="todo.status === 'in-progress'"
+                          [class.done]="todo.status === 'done'"
+                        >
+                          {{ todo.status | titlecase }}
+                        </span>
+                      </td>
+                      <td>
+                        <span
+                          class="priority-badge"
+                          [class.high]="todo.priority === 'high'"
+                          [class.medium]="todo.priority === 'medium'"
+                          [class.low]="todo.priority === 'low'"
+                        >
+                          {{ todo.priority | titlecase }}
+                        </span>
+                      </td>
+                      <td class="assigned-to">
+                        {{ todo.assignedTo || 'Non assigné' }}
+                      </td>
+                      <td class="actions">
+                        <button (click)="deleteTodo(todo.id)" class="btn-delete">Supprimer</button>
+                        <button (click)="assignTodo(todo)" class="btn-assign">Assigner</button>
+                      </td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          } @else {
+            <div class="empty-state">
+              <p>Aucun ticket trouvé</p>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Boutons d'action -->
       <div class="action-buttons">
         <button (click)="goBack()" class="btn btn-primary">Retour aux Todos</button>
-        <button class="btn btn-secondary">Voir les statistiques</button>
-      </div>
-
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-number">{{ users().length }}</div>
-          <div class="stat-label">Utilisateurs</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">3</div>
-          <div class="stat-label">Tickets actifs</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">2</div>
-          <div class="stat-label">Admins</div>
-        </div>
-      </div>
-
-      <div class="feature-list">
-        <h4>Fonctionnalités disponibles :</h4>
-        <ul>
-          <li>Gestion des utilisateurs (création, modification, suppression)</li>
-          <li>Gestion des tickets et tâches</li>
-          <li>Attribution des rôles et permissions</li>
-          <li>Statistiques et rapports</li>
-          <li>Modération du contenu</li>
-        </ul>
       </div>
     </div>
   </div>

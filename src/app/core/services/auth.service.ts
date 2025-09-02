@@ -8,6 +8,7 @@ export class AuthService {
   private users = signal<User[]>([
     {
       id: 1,
+      name: 'Admin User',
       email: 'admin@example.com',
       password: 'admin123',
       role: 'admin',
@@ -15,6 +16,7 @@ export class AuthService {
     },
     {
       id: 2,
+      name: 'Normal User',
       email: 'user@example.com',
       password: 'user123',
       role: 'user',
@@ -101,6 +103,7 @@ export class AuthService {
 
     const newUser: User = {
       id: Date.now(),
+      name: userData.name,
       email: userData.email,
       password: userData.password,
       role: 'user',
@@ -135,6 +138,11 @@ export class AuthService {
     return this.currentUser()?.role === 'admin';
   }
 
+  getToken(): string | null {
+    const user = this.getCurrentUser();
+    return user ? `mock-token-${user.id}` : null;
+  }
+
   async getAllUsers(): Promise<User[]> {
     console.log('🔄 Service: Récupération de tous les utilisateurs...');
     await this.delay(400);
@@ -148,5 +156,22 @@ export class AuthService {
       ...user,
       password: '***',
     }));
+  }
+
+  async deleteUser(userId: number): Promise<void> {
+    console.log('🔄 Service: Suppression utilisateur...', userId);
+    await this.delay(300);
+
+    if (!this.isAdmin()) {
+      throw new Error('Accès non autorisé');
+    }
+
+    const currentUser = this.getCurrentUser();
+    if (currentUser && currentUser.id === userId) {
+      throw new Error('Impossible de supprimer votre propre compte');
+    }
+
+    this.users.update(users => users.filter(user => user.id !== userId));
+    console.log('✅ Service: Utilisateur supprimé');
   }
 }

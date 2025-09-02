@@ -1,4 +1,4 @@
-.register-container {
+.auth-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -6,7 +6,7 @@
   background-color: #f9fafb;
   padding: 3rem 1rem;
 
-  .register-card {
+  .auth-card {
     max-width: 28rem;
     width: 100%;
     margin-top: 2rem;
@@ -52,6 +52,21 @@
           box-shadow: 0 0 0 2px #3b82f6;
           border-color: #3b82f6;
         }
+
+        &.error {
+          border-color: #dc2626;
+
+          &:focus {
+            border-color: #dc2626;
+            box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+          }
+        }
+      }
+
+      .field-error {
+        color: #dc2626;
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
       }
     }
 
@@ -89,7 +104,7 @@
       }
     }
 
-    .login-link {
+    .register-link {
       display: block;
       margin-top: 1.5rem;
       font-size: 0.875rem;
@@ -105,10 +120,10 @@
 }
 
 @media (max-width: 640px) {
-  .register-container {
+  .auth-container {
     padding: 1rem 0.5rem;
 
-    .register-card {
+    .auth-card {
       margin: 1rem 0;
       padding: 1rem;
 

@@ -52,6 +52,21 @@
           box-shadow: 0 0 0 2px #3b82f6;
           border-color: #3b82f6;
         }
+
+        &.error {
+          border-color: #dc2626;
+
+          &:focus {
+            border-color: #dc2626;
+            box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+          }
+        }
+      }
+
+      .field-error {
+        color: #dc2626;
+        font-size: 0.75rem;
+        margin-top: 0.25rem;
       }
     }
 
