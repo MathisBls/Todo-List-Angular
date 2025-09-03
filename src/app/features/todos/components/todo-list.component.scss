@@ -1,0 +1,315 @@
+// Dashboard des statistiques
+.dashboard-stats {
+  margin-bottom: 2rem;
+
+  .stats-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 1rem;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+
+    .stat-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .stat-label {
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #6b7280;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-value {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #1f2937;
+
+        &.total {
+          color: #1f2937;
+        }
+
+        &.completed {
+          color: #059669;
+        }
+
+        &.in-progress {
+          color: #2563eb;
+        }
+
+        &.high-priority {
+          color: #dc2626;
+        }
+
+        &.completion-rate {
+          color: #7c3aed;
+        }
+      }
+    }
+  }
+}
+
+// Colonnes Kanban
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+
+  .kanban-column {
+    background: #f9fafb;
+    border-radius: 0.5rem;
+    padding: 1rem;
+
+    .column-header {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .column-count {
+        font-size: 0.875rem;
+        color: #6b7280;
+        font-weight: normal;
+      }
+    }
+
+    .todo-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+
+      .todo-card {
+        background: white;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid;
+        transition: all 0.2s ease;
+
+        &:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        &.todo-column {
+          border-left-color: #9ca3af;
+        }
+
+        &.in-progress-column {
+          border-left-color: #60a5fa;
+        }
+
+        &.done-column {
+          border-left-color: #34d399;
+        }
+
+        .todo-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 0.5rem;
+
+          .todo-title {
+            font-weight: 500;
+            color: #1f2937;
+            margin: 0;
+            flex: 1;
+            margin-right: 0.5rem;
+
+            &.line-through {
+              text-decoration: line-through;
+            }
+          }
+
+          .priority-badge {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            white-space: nowrap;
+
+            &.high {
+              background-color: #fef2f2;
+              color: #991b1b;
+            }
+
+            &.medium {
+              background-color: #fffbeb;
+              color: #92400e;
+            }
+
+            &.low {
+              background-color: #f0fdf4;
+              color: #166534;
+            }
+          }
+        }
+
+        .todo-description {
+          font-size: 0.875rem;
+          color: #6b7280;
+          margin-bottom: 0.75rem;
+          line-height: 1.4;
+
+          &.line-through {
+            text-decoration: line-through;
+          }
+        }
+
+        .todo-footer {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 0.75rem;
+          color: #6b7280;
+        }
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .dashboard-stats {
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+
+      .stat-card {
+        padding: 1rem;
+
+        .stat-value {
+          font-size: 1.25rem;
+        }
+      }
+    }
+  }
+
+  .kanban-board {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+
+    .kanban-column {
+      padding: 0.75rem;
+
+      .todo-list {
+        .todo-card {
+          padding: 0.75rem;
+
+          .todo-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+
+            .todo-title {
+              margin-right: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-stats {
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// Animations
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.todo-card {
+  animation: slideIn 0.3s ease-out;
+}
+
+// Focus states for accessibility
+.todo-card:focus-within {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+// Dark mode support (optional)
+@media (prefers-color-scheme: dark) {
+  .dashboard-stats {
+    .stats-title {
+      color: #f9fafb;
+    }
+
+    .stat-card {
+      background: #374151;
+      color: #f9fafb;
+
+      .stat-label {
+        color: #d1d5db;
+      }
+
+      .stat-value {
+        color: #f9fafb;
+      }
+    }
+  }
+
+  .kanban-board {
+    .kanban-column {
+      background: #374151;
+
+      .column-header {
+        color: #f9fafb;
+
+        .column-count {
+          color: #d1d5db;
+        }
+      }
+
+      .todo-list {
+        .todo-card {
+          background: #4b5563;
+
+          .todo-header {
+            .todo-title {
+              color: #f9fafb;
+            }
+          }
+
+          .todo-description {
+            color: #d1d5db;
+          }
+
+          .todo-footer {
+            color: #d1d5db;
+          }
+        }
+      }
+    }
+  }
+}

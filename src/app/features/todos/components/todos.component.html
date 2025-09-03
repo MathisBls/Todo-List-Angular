@@ -1,6 +1,9 @@
 <div class="todos-container">
   <div class="todos-header">
-    <h2>Mes Todos</h2>
+    <div class="header-content">
+      <h2>Mes Todos</h2>
+      <a routerLink="/todos/dashboard" class="dashboard-link">Voir le Dashboard</a>
+    </div>
   </div>
 
   @if (loading()) {
@@ -26,6 +29,14 @@
             [(ngModel)]="newTodo.description"
             name="description"
             placeholder="Description (optionnel)"
+          />
+
+          <input
+            type="number"
+            [(ngModel)]="newTodo.duration"
+            name="duration"
+            placeholder="Durée estimée (minutes)"
+            min="1"
           />
         </div>
 
@@ -56,16 +67,27 @@
           À faire
           <span class="count">({{ getTodosByStatus('todo').length }})</span>
         </h3>
-        @for (todo of getTodosByStatus('todo'); track todo.id) {
-          <div class="todo-item">
+        @for (todo of getTodosByStatus('todo'); track trackByTodoId) {
+          <div
+            class="todo-item"
+            [appHighlight]="todo.priority === 'high' ? 'rgba(239, 68, 68, 0.1)' : 'transparent'"
+            [appHighlightDelay]="todo.priority === 'high' ? 500 : 0"
+          >
             <h4>{{ todo.title }}</h4>
             @if (todo.description) {
               <p>{{ todo.description }}</p>
             }
             <div class="todo-footer">
-              <span class="priority-badge" [class]="todo.priority">
-                {{ todo.priority | titlecase }}
-              </span>
+              <div class="todo-info">
+                <span class="priority-badge" [class]="todo.priority">
+                  {{ todo.priority | priority }}
+                </span>
+                @if (todo.duration) {
+                  <span class="duration-badge">
+                    {{ todo.duration | duration }}
+                  </span>
+                }
+              </div>
               <button (click)="updateStatus(todo.id, 'in-progress')" class="action-button">
                 Commencer
               </button>
@@ -79,16 +101,27 @@
           En cours
           <span class="count">({{ getTodosByStatus('in-progress').length }})</span>
         </h3>
-        @for (todo of getTodosByStatus('in-progress'); track todo.id) {
-          <div class="todo-item">
+        @for (todo of getTodosByStatus('in-progress'); track trackByTodoId) {
+          <div
+            class="todo-item"
+            [appHighlight]="todo.priority === 'high' ? 'rgba(239, 68, 68, 0.1)' : 'transparent'"
+            [appHighlightDelay]="todo.priority === 'high' ? 500 : 0"
+          >
             <h4>{{ todo.title }}</h4>
             @if (todo.description) {
               <p>{{ todo.description }}</p>
             }
             <div class="todo-footer">
-              <span class="priority-badge" [class]="todo.priority">
-                {{ todo.priority | titlecase }}
-              </span>
+              <div class="todo-info">
+                <span class="priority-badge" [class]="todo.priority">
+                  {{ todo.priority | priority }}
+                </span>
+                @if (todo.duration) {
+                  <span class="duration-badge">
+                    {{ todo.duration | duration }}
+                  </span>
+                }
+              </div>
               <button (click)="updateStatus(todo.id, 'done')" class="action-button">
                 Terminer
               </button>
@@ -102,16 +135,27 @@
           Terminé
           <span class="count">({{ getTodosByStatus('done').length }})</span>
         </h3>
-        @for (todo of getTodosByStatus('done'); track todo.id) {
-          <div class="todo-item">
+        @for (todo of getTodosByStatus('done'); track trackByTodoId) {
+          <div
+            class="todo-item"
+            [appHighlight]="todo.priority === 'high' ? 'rgba(34, 197, 94, 0.1)' : 'transparent'"
+            [appHighlightDelay]="todo.priority === 'high' ? 500 : 0"
+          >
             <h4>{{ todo.title }}</h4>
             @if (todo.description) {
               <p>{{ todo.description }}</p>
             }
             <div class="todo-footer">
-              <span class="priority-badge" [class]="todo.priority">
-                {{ todo.priority | titlecase }}
-              </span>
+              <div class="todo-info">
+                <span class="priority-badge" [class]="todo.priority">
+                  {{ todo.priority | priority }}
+                </span>
+                @if (todo.duration) {
+                  <span class="duration-badge">
+                    {{ todo.duration | duration }}
+                  </span>
+                }
+              </div>
               <button (click)="deleteTodo(todo.id)" class="action-button delete">Supprimer</button>
             </div>
           </div>
