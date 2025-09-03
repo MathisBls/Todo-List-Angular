@@ -27,6 +27,7 @@ export class AuthService {
   private currentUser = signal<User | null>(null);
 
   constructor() {
+    this.restoreUsers();
     this.restoreSession();
   }
 
@@ -46,6 +47,31 @@ export class AuthService {
   private removeFromLocalStorage(): void {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('isAuthenticated');
+  }
+
+  private saveUsersToLocalStorage(): void {
+    localStorage.setItem('users', JSON.stringify(this.users()));
+  }
+
+  private restoreUsers(): void {
+    try {
+      const savedUsers = localStorage.getItem('users');
+      if (savedUsers) {
+        const users = JSON.parse(savedUsers).map((user: Record<string, unknown>) => ({
+          ...user,
+          createdAt: new Date(user['createdAt'] as string),
+        }));
+        this.users.set(users as User[]);
+        console.warn('✅ Utilisateurs restaurés depuis localStorage:', users.length);
+      } else {
+        // Sauvegarder les utilisateurs par défaut
+        this.saveUsersToLocalStorage();
+        console.warn('✅ Utilisateurs par défaut sauvegardés');
+      }
+    } catch (error) {
+      console.error('❌ Erreur lors de la restauration des utilisateurs:', error);
+      this.saveUsersToLocalStorage();
+    }
   }
 
   private restoreSession(): void {
@@ -111,6 +137,7 @@ export class AuthService {
     };
 
     this.users.update(users => [...users, newUser]);
+    this.saveUsersToLocalStorage();
     this.currentUser.set(newUser);
     this.saveToLocalStorage(newUser);
 
@@ -172,6 +199,7 @@ export class AuthService {
     }
 
     this.users.update(users => users.filter(user => user.id !== userId));
+    this.saveUsersToLocalStorage();
     console.warn('✅ Service: Utilisateur supprimé');
   }
 }
