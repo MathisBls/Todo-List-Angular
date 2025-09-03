@@ -56,7 +56,7 @@ export class AuthService {
       try {
         const user = JSON.parse(savedUser);
         this.currentUser.set(user);
-        console.log('✅ Session restaurée pour:', user.email);
+        console.warn('✅ Session restaurée pour:', user.email);
       } catch (error) {
         console.error('❌ Erreur lors de la restauration de session:', error);
         this.removeFromLocalStorage();
@@ -67,7 +67,7 @@ export class AuthService {
   async login(
     credentials: LoginRequest
   ): Promise<{ success: boolean; user?: User; error?: string }> {
-    console.log('🔄 Service: Tentative de connexion...', credentials.email);
+    console.warn('🔄 Service: Tentative de connexion...', credentials.email);
     await this.delay(500);
 
     const user = this.users().find(
@@ -77,10 +77,10 @@ export class AuthService {
     if (user) {
       this.currentUser.set(user);
       this.saveToLocalStorage(user);
-      console.log('✅ Service: Connexion réussie pour:', user.email);
+      console.warn('✅ Service: Connexion réussie pour:', user.email);
       return { success: true, user };
     } else {
-      console.log('❌ Service: Échec de connexion pour:', credentials.email);
+      console.warn('❌ Service: Échec de connexion pour:', credentials.email);
       return { success: false, error: 'Email ou mot de passe incorrect' };
     }
   }
@@ -88,16 +88,16 @@ export class AuthService {
   async register(
     userData: RegisterRequest
   ): Promise<{ success: boolean; user?: User; error?: string }> {
-    console.log("🔄 Service: Tentative d'inscription...", userData.email);
+    console.warn("🔄 Service: Tentative d'inscription...", userData.email);
     await this.delay(600);
 
     if (this.users().some(u => u.email === userData.email)) {
-      console.log('❌ Service: Email déjà utilisé:', userData.email);
+      console.warn('❌ Service: Email déjà utilisé:', userData.email);
       return { success: false, error: 'Cet email est déjà utilisé' };
     }
 
     if (userData.password !== userData.confirmPassword) {
-      console.log('❌ Service: Mots de passe différents');
+      console.warn('❌ Service: Mots de passe différents');
       return { success: false, error: 'Les mots de passe ne correspondent pas' };
     }
 
@@ -114,16 +114,16 @@ export class AuthService {
     this.currentUser.set(newUser);
     this.saveToLocalStorage(newUser);
 
-    console.log('✅ Service: Inscription réussie pour:', newUser.email);
+    console.warn('✅ Service: Inscription réussie pour:', newUser.email);
     return { success: true, user: newUser };
   }
 
   async logout(): Promise<void> {
-    console.log('🔄 Service: Déconnexion...');
+    console.warn('🔄 Service: Déconnexion...');
     await this.delay(200);
     this.currentUser.set(null);
     this.removeFromLocalStorage();
-    console.log('✅ Service: Déconnexion réussie');
+    console.warn('✅ Service: Déconnexion réussie');
   }
 
   isAuthenticated(): boolean {
@@ -144,14 +144,14 @@ export class AuthService {
   }
 
   async getAllUsers(): Promise<User[]> {
-    console.log('🔄 Service: Récupération de tous les utilisateurs...');
+    console.warn('🔄 Service: Récupération de tous les utilisateurs...');
     await this.delay(400);
 
     if (!this.isAdmin()) {
       throw new Error('Accès non autorisé');
     }
 
-    console.log('✅ Service: Utilisateurs récupérés');
+    console.warn('✅ Service: Utilisateurs récupérés');
     return this.users().map(user => ({
       ...user,
       password: '***',
@@ -159,7 +159,7 @@ export class AuthService {
   }
 
   async deleteUser(userId: number): Promise<void> {
-    console.log('🔄 Service: Suppression utilisateur...', userId);
+    console.warn('🔄 Service: Suppression utilisateur...', userId);
     await this.delay(300);
 
     if (!this.isAdmin()) {
@@ -172,6 +172,6 @@ export class AuthService {
     }
 
     this.users.update(users => users.filter(user => user.id !== userId));
-    console.log('✅ Service: Utilisateur supprimé');
+    console.warn('✅ Service: Utilisateur supprimé');
   }
 }

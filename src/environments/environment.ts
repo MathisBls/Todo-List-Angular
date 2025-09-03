@@ -1,6 +1,6 @@
 export const environment = {
-  production: true,
-  apiUrl: 'https://api.monapp.com',
+  production: false,
+  apiUrl: 'http://localhost:3000/api',
   appName: 'TodoList App',
   version: '1.0.0',
 };

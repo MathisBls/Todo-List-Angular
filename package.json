@@ -2,9 +2,16 @@
   "name": "angular-todo",
   "version": "0.0.0",
   "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "build:prod": "ng build --configuration production",
+    "watch": "ng build --watch --configuration development",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
-    "test": "echo \"No tests yet\" && exit 0",
+    "test": "ng test",
+    "test:coverage": "ng test --code-coverage",
+    "analyze": "ng build --stats-json && npx webpack-bundle-analyzer dist/angular-todo/stats.json",
     "format": "prettier --write \"src/**/*.{ts,html,scss,css,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,html,scss,css,json}\"",
     "prepare": "husky"

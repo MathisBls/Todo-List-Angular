@@ -8,7 +8,7 @@ export interface Notification {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ErrorHandlerService {
   private notifications = signal<Notification[]>([]);
@@ -22,7 +22,7 @@ export class ErrorHandlerService {
       id: this.generateId(),
       type: 'error',
       message,
-      duration
+      duration,
     });
   }
 
@@ -31,7 +31,7 @@ export class ErrorHandlerService {
       id: this.generateId(),
       type: 'warning',
       message,
-      duration
+      duration,
     });
   }
 
@@ -40,7 +40,7 @@ export class ErrorHandlerService {
       id: this.generateId(),
       type: 'info',
       message,
-      duration
+      duration,
     });
   }
 
@@ -49,19 +49,17 @@ export class ErrorHandlerService {
       id: this.generateId(),
       type: 'success',
       message,
-      duration
+      duration,
     });
   }
 
   removeNotification(id: string): void {
-    this.notifications.update(notifications => 
-      notifications.filter(n => n.id !== id)
-    );
+    this.notifications.update(notifications => notifications.filter(n => n.id !== id));
   }
 
   private addNotification(notification: Notification): void {
     this.notifications.update(notifications => [...notifications, notification]);
-    
+
     // Auto-remove after duration
     if (notification.duration) {
       setTimeout(() => {

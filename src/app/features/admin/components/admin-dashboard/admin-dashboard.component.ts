@@ -84,7 +84,7 @@ export class AdminDashboardComponent implements OnInit {
 
   protected assignTodo(todo: Todo): void {
     // TODO: Implémenter la logique d'assignation
-    console.log('Assigner le ticket:', todo);
+    console.warn('Assigner le ticket:', todo);
   }
 
   protected goBack(): void {
