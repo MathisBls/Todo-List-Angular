@@ -21,12 +21,12 @@ export class TodoService {
     try {
       const savedTodos = localStorage.getItem('todos');
       if (savedTodos) {
-        const todos = JSON.parse(savedTodos).map((todo: any) => ({
+        const todos = JSON.parse(savedTodos).map((todo: Record<string, unknown>) => ({
           ...todo,
-          createdAt: new Date(todo.createdAt),
-          updatedAt: new Date(todo.updatedAt),
+          createdAt: new Date(todo['createdAt'] as string),
+          updatedAt: new Date(todo['updatedAt'] as string),
         }));
-        this.todos.set(todos);
+        this.todos.set(todos as Todo[]);
         console.log('✅ Todos restaurés depuis localStorage:', todos.length);
       } else {
         this.todos.set([

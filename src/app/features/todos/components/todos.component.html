@@ -2,7 +2,35 @@
   <div class="todos-header">
     <div class="header-content">
       <h2>Mes Todos</h2>
-      <a routerLink="/todos/dashboard" class="dashboard-link">Voir le Dashboard</a>
+    </div>
+  </div>
+
+  <!-- Dashboard des statistiques -->
+  <div class="dashboard-stats">
+    <h2 class="stats-title">Statistiques en temps réel</h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3 class="stat-label">Total</h3>
+        <p class="stat-value total">{{ todoService.todoStats().total }}</p>
+      </div>
+      <div class="stat-card">
+        <h3 class="stat-label">Complétés</h3>
+        <p class="stat-value completed">{{ todoService.todoStats().completed }}</p>
+      </div>
+      <div class="stat-card">
+        <h3 class="stat-label">En cours</h3>
+        <p class="stat-value in-progress">{{ todoService.todoStats().inProgress }}</p>
+      </div>
+      <div class="stat-card">
+        <h3 class="stat-label">Priorité haute</h3>
+        <p class="stat-value high-priority">{{ todoService.todoStats().highPriority }}</p>
+      </div>
+      <div class="stat-card">
+        <h3 class="stat-label">Taux de complétion</h3>
+        <p class="stat-value completion-rate">
+          {{ todoService.todoStats().completionRate | number: '1.0-0' }}%
+        </p>
+      </div>
     </div>
   </div>
 

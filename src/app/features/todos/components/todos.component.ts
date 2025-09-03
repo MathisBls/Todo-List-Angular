@@ -1,7 +1,6 @@
 import { Component, inject, signal, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { Todo } from '../models/todo.model';
 import { TodoService } from '../services/todo.service';
 import { PriorityPipe } from '../../../shared/pipes/priority.pipe';
@@ -12,13 +11,13 @@ import { ErrorService } from '../../../shared/services/error.service';
 @Component({
   selector: 'app-todos',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, PriorityPipe, DurationPipe, HighlightDirective],
+  imports: [CommonModule, FormsModule, PriorityPipe, DurationPipe, HighlightDirective],
   templateUrl: './todos.component.html',
   styleUrls: ['./todos.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush, // ⚡ Optimisation
 })
 export class TodosComponent implements OnInit {
-  private readonly todoService = inject(TodoService);
+  protected readonly todoService = inject(TodoService);
   private readonly errorService = inject(ErrorService);
 
   protected todos = signal<Todo[]>([]);
